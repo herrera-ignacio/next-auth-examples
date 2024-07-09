@@ -14,6 +14,7 @@
 3. Set up MongoDB connection (`utils/dbConnect.js`).
 4. Create the user model (`models/user.js`).
 5. Create the register API route (`app/api/register/route.js`).
+6. Update `app/layout.js` to include `SessionProvider`.
 6. Create the register page (`app/register/page.js`) and validate registrations on your Mongo database.
 7. Create the login page (`app/login/page.js`) that calls `next-auth` `signIn` method.
 8. Create a navbar to navigate between pages and show session state (`components/nav`).
