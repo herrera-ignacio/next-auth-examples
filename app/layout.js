@@ -1,6 +1,6 @@
 import "./globals.css";
-// import TopNav from "@/components/nav/TopNav";
 import { Toaster } from "react-hot-toast";
+import TopNav from "@/components/TopNav";
 import { NextAuthProvider } from "@/components/NextAuthProvider";
 
 export default function RootLayout({ children }) {
@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
     <body>
     <NextAuthProvider>
-        {/*<TopNav />*/}
+        <TopNav />
         <Toaster />
         {children}
     </NextAuthProvider>
