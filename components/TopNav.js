@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {auth} from "@/utils/auth";
+import { auth } from "@/utils/auth";
 import LogoutButton from "@/components/LogoutButton";
 
 export default async function TopNav() {
