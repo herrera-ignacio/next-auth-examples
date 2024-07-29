@@ -31,9 +31,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           return user;
         } catch {
-          throw new Error("Invalid credentials");
+          return null;
         }
       }
     })
   ],
+  secret: process.env.NEXTAUTH_SECRET
 })
