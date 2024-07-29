@@ -13,7 +13,11 @@ export default function Login() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
+  const isSubmitDisabled = loading || !email || !password;
+
   const handleSubmit = async (e) => {
+    console.log("SUBMIT! LOGIN?")
+
     e.preventDefault();
     try {
       setLoading(true);
@@ -21,13 +25,13 @@ export default function Login() {
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: false,
+        redirectTo: "/dashboard",
       });
 
       if (result?.error) {
         toast.error(result.error);
       } else {
-        toast.success("Login exitoso");
+        toast.success("Login successful");
         // TODO redirect to dashboard if no callbackUrl
         router.push(callbackUrl);
       }
@@ -79,8 +83,8 @@ export default function Login() {
 
             <div className="mt-6 ml-6 flex items-center justify-start gap-x-6">
               <button type="submit"
-                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      disabled={loading || !name || !email || !password}
+                      className={`rounded-md ${isSubmitDisabled ? "bg-gray-600" : "bg-indigo-600  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"} px-3 py-2 text-sm font-semibold text-white shadow-sm`}
+                      disabled={isSubmitDisabled}
               >
                 {loading ? " Please wait..." : " Submit"}
               </button>
@@ -88,7 +92,7 @@ export default function Login() {
           </form>
 
           <div className="mt-6 ml-6">
-            <button type="submit"
+            <button
                     className="rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     onClick={() => signIn("google", {callbackUrl})}
             >

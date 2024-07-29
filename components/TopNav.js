@@ -13,14 +13,15 @@ export default function TopNav() {
         <Link href="/">Home</Link>
 
         {status === "authenticated" ? (
-          <div>
+          <>
             <Link href={`/dashboard/${isAdmin ? "admin" : "user"}`}>{data?.user?.name}</Link>
             <a
+              className="cursor-pointer"
               onClick={() => signOut({callbackUrl: "/login"})}
             >
               Logout
             </a>
-          </div>
+          </>
         ) : status === "loading" ? (
           <span>Loading...</span>
         ) : (
