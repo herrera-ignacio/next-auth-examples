@@ -1,8 +1,6 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import bcrypt from "bcrypt";
-import dbConnect from "@/utils/dbConnect";
-import User from "@/models/user";
+import {getUserByCredentials, getUserByEmail} from "@/utils/users";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -13,28 +11,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {}
       },
       async authorize(credentials, req) {
-        await dbConnect();
-        const { email, password } = credentials;
-
-        try {
-          const user = await User.findOne({ email });
-
-          if (!user) {
-            throw new Error("User not found");
-          }
-
-          const isPasswordMatch = await bcrypt.compare(password, user.password);
-
-          if (!isPasswordMatch) {
-            throw new Error("Invalid password");
-          }
-
-          return user;
-        } catch {
-          return null;
-        }
+        return getUserByCredentials(credentials.email, credentials.password);
       }
     })
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      // this step is necessary to inject the user from the db with its roles
+      // note that the user's profile coming from the provider is only exposed
+      // during the first call (right after sign-in)
+      if (user) {
+        const userFromDb = await getUserByEmail(user.email);
+        token.role = userFromDb.role;
+      }
+      return token;
+    },
+    session: ({ session, token }) => {
+      // this step is necessary to inject the user that comes from the token
+      // and make it available from the session object (e.g., auth(), useSession())
+      session.user.role = token.role;
+      return session;
+    }
+  },
+  pages: {
+    signIn: "/login",
+  },
   secret: process.env.NEXTAUTH_SECRET
 })
+
+export const authenticationRoutes = ["/login", "/register"];
+export const nonAuthenticatedRoutes = ["/", ...authenticationRoutes];
+export const adminOnlyRoutes = ["/dashboard/admin"];

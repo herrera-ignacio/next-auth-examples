@@ -7,8 +7,8 @@ import {handleLogin} from "@/app/login/actions";
 
 
 export default function Login() {
-  const [email, setEmail] = useState("ignacioromanherrera@gmail.com");
-  const [password, setPassword] = useState("test");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [formState, formAction] = useFormState(handleLogin, { message: "" })
 
   // TODO update to use a callbackUrl
@@ -21,7 +21,7 @@ export default function Login() {
     <main>
       <div className="space-y-12 mt-1">
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900 text-center">Login</h2>
+          <h1 className="text-base font-semibold leading-7 text-gray-900 text-center">Login</h1>
 
           <form action={formAction}>
             <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 p-5">

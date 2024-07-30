@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { auth } from "@/utils/auth";
 import LogoutButton from "@/components/LogoutButton";
+import { isAdmin } from "@/models/user";
 
 export default async function TopNav() {
   const session = await auth();
-  const isAdmin = session?.user.role === "admin";
+  console.log(session?.user);
 
   return (
       <nav className="bg-gray-800">
@@ -14,7 +15,7 @@ export default async function TopNav() {
 
           {session ? (
             <>
-              <Link href={`/dashboard/${isAdmin ? "admin" : "user"}`}>{session?.user?.name}</Link>
+              <Link href={`/dashboard${isAdmin(session?.user) ? "/admin" : ""}`}>{session?.user?.name}</Link>
               <LogoutButton />
             </>
           ) : (

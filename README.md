@@ -10,6 +10,4 @@
 
 ## TODO
 
-- Disable access to login and signup if authenticated.
-- Make a dummy /dashboard page protected by auth and roles.
 - Protect a dummy API call with auth and roles.
