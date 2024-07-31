@@ -5,7 +5,6 @@ import { isAdmin } from "@/models/user";
 
 export default async function TopNav() {
   const session = await auth();
-  console.log(session?.user);
 
   return (
       <nav className="bg-gray-800">

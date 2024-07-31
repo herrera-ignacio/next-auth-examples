@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // this step is necessary to inject the user from the db with its roles
       // note that the user's profile coming from the provider is only exposed
       // during the first call (right after sign-in)
+      console.log("[JWT]");
       if (user) {
         const userFromDb = await getUserByEmail(user.email);
         token.role = userFromDb.role;
@@ -41,4 +42,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 export const authenticationRoutes = ["/login", "/register"];
 export const nonAuthenticatedRoutes = ["/", ...authenticationRoutes];
-export const adminOnlyRoutes = ["/dashboard/admin"];
+export const adminOnlyRoutes = ["/api/admin/*", "/dashboard/admin"];
