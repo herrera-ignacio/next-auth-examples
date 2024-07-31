@@ -1,5 +1,10 @@
+import { headers } from "next/headers";
+
 export default async function Dashboard() {
-  const res = await fetch(`${process.env.API}/admin`, { cache: "no-store" });
+  const res = await fetch(`${process.env.API}/admin`, {
+    cache: "no-store",
+    headers: new Headers(headers()) // required for req.auth on the API routes to work
+  });
   const { message } = await res.json();
   return (
     <main>

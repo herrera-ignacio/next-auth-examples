@@ -7,14 +7,12 @@ export async function handleLogin(currentState, formData) {
   const password = formData.get("password");
 
   try {
-
-  const result = await signIn("credentials", {
+  await signIn("credentials", {
     email,
     password,
     // TODO redirect to a callback url
     redirectTo: "/",
   });
-
   } catch(error) {
    if (error instanceof AuthError) {
      return {

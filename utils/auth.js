@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import {getUserByCredentials, getUserByEmail} from "@/utils/users";
+import {NextResponse} from "next/server";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -41,4 +42,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 export const authenticationRoutes = ["/login", "/register"];
 export const nonAuthenticatedRoutes = ["/", ...authenticationRoutes];
-export const adminOnlyRoutes = ["/api/admin/*", "/dashboard/admin"];
+export const adminOnlyRoutes = ["/dashboard/admin"];
