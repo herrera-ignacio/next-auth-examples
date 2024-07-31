@@ -17,7 +17,7 @@ export default auth(req => {
     // If trying to access admin-only routes
     // while not authorized, redirect to forbidden
     if (req.auth && adminOnlyRoutes.includes(req.nextUrl.pathname) && req.auth.user.role !== "admin") {
-        return NextResponse.rewrite(new URL("/forbidden"));
+        return NextResponse.rewrite(new URL("/forbidden", req.nextUrl.origin));
     }
 });
 
