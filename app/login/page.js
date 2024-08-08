@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useFormState } from "react-dom";
 import { signIn } from "next-auth/react";
 import SubmitButton from "@/components/SubmitButton";
 import {handleLogin} from "@/app/login/actions";
+import toast from "react-hot-toast";
 
 
 export default function Login() {
@@ -16,6 +17,12 @@ export default function Login() {
   // const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
   const isSubmitDisabled = !email || !password;
+
+  useEffect(() => {
+    if (formState?.error) {
+      toast.error(formState.message);
+    }
+  }, [formState.error]);
 
   return (
     <main>
