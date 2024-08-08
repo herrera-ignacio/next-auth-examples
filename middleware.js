@@ -22,6 +22,14 @@ export default auth(req => {
 });
 
 export const config = {
+    runtime: 'experimental-edge',
+    unstable_allowDynamic: [
+        "/node_modules/lodash.get/**",
+        "/node_modules/lodash.merge/**",
+        "/node_modules/mongoose/dist/**",
+        "/node_modules/bcryptjs/dist/**",
+        "/node_modules/mongoose-unique-validator/**"
+    ],
     matcher: [
         /*
          * Match all request paths except for the ones starting with:
